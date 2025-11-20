@@ -6,7 +6,8 @@
    
    Put the concept ids from the expansion into a pandas dataframe with the display
 
-2. Iterate through the pandas data
+2. Iterate through the pandas data.
+
    Use this GET request on terminology server endpoint to get all properties for each observable entity concept
    `{{url}}/CodeSystem/$lookup?version=http://snomed.info/sct/11010000107/version/20250921&code=168331010000106&property=*&system=http://snomed.info/sct`
    
