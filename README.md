@@ -1,15 +1,19 @@
 
 
-    1. Use this ECL expression to get all the Observable entities in the specified version of SNOMED CT 
- 
-    {{url}}/ValueSet/$expand?url=http://snomed.info/sct/11010000107/version/20250721/fhir_vs=ecl/%3C%20363787002%20
-    put the concept ids from the expansion into a pandas dataframe with the display
+1. Use this ECL expression to get all the Observable entities in the specified version of SNOMED CT 
 
-    2. Iterate through the pandas data
-    Use this GET request on terminology server endpoint to get all properties for each observable entity concept
-   {{url}}/CodeSystem/$lookup?version=http://snomed.info/sct/11010000107/version/20250921&code=168331010000106&property=*&system=http://snomed.info/sct
-    response:
-    {
+   `{{url}}/ValueSet/$expand?url=http://snomed.info/sct/11010000107/version/20250721/fhir_vs=ecl/%3C%20363787002%20`
+   
+   Put the concept ids from the expansion into a pandas dataframe with the display
+
+2. Iterate through the pandas data
+   Use this GET request on terminology server endpoint to get all properties for each observable entity concept
+   `{{url}}/CodeSystem/$lookup?version=http://snomed.info/sct/11010000107/version/20250921&code=168331010000106&property=*&system=http://snomed.info/sct`
+   
+   Response:
+
+```json
+{
     "resourceType": "Parameters",
     "parameter": [
         {
@@ -568,22 +572,27 @@
         }
     ]
 }
+```
+
 Get the LOINC code property from value where valueCoding.code = equivalentConcept
-       {
-            "name": "property",
-            "part": [
-                {
-                    "name": "code",
-                    "valueCode": "equivalentConcept"
-                },
-                {
-                    "name": "value",
-                    "valueCoding": {
-                        "system": "http://loinc.org",
-                        "code": "718-7"
-                    }
-                }
-            ]
+
+```json
+{
+    "name": "property",
+    "part": [
+        {
+            "name": "code",
+            "valueCode": "equivalentConcept"
+        },
+        {
+            "name": "value",
+            "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "718-7"
+            }
         }
+    ]
+}
+```
 
 3. output in a flat map file the source SNOMED CT code, display and the LOINC code. Leave LOINC Column empty if there is no match for the SNOMED Code.
